@@ -7,12 +7,12 @@ using ServiceContracts.DTOs;
 using ServiceContracts.Options;
 using System.Net.Http.Json;
 
-public class WikiRateAnswerService : IWikiRateAnswerService
+public class WikiRateClient : IWikiRateAnswerService
 {
     private readonly HttpClient _httpClient;
     private readonly WikiRateOptions _options;
 
-    public WikiRateAnswerService(HttpClient httpClient, IOptions<WikiRateOptions> options)
+    public WikiRateClient(HttpClient httpClient, IOptions<WikiRateOptions> options)
     {
         _httpClient = httpClient;
         _options = options.Value;
@@ -25,7 +25,10 @@ public class WikiRateAnswerService : IWikiRateAnswerService
         
         HttpResponseMessage responseMessage = await _httpClient.GetAsync(url);
 
-        responseMessage.EnsureSuccessStatusCode();
+        if (!responseMessage.IsSuccessStatusCode) 
+        {
+            return null;
+        }
        
         WikiRateAnswerDto? dto = 
             await responseMessage.Content.ReadFromJsonAsync<WikiRateAnswerDto>();

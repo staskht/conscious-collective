@@ -15,7 +15,7 @@ builder.Services.Configure<WikiRateOptions>(
     builder.Configuration.GetSection("WikiRate"));
 
 
-builder.Services.AddHttpClient<IWikiRateAnswerService, WikiRateAnswerService>(client =>
+builder.Services.AddHttpClient<IWikiRateAnswerService, WikiRateClient>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["WikiRate:BaseUrl"]!);
 });

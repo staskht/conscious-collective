@@ -11,6 +11,11 @@ namespace Services
     public class MaterialsService : IMaterialsService
     {
         private readonly IMaterialsRepository _materialsRepository;
+        private const double Co2Weight = 0.30;
+        private const double WaterWeight = 0.20;
+        private const double ChemicalWeight = 0.20;
+        private const double RecyclabilityWeight = 0.15;
+        private const double AnimalWelfareWeight = 0.15;
         public MaterialsService(IMaterialsRepository materialsRepository) 
         {
             _materialsRepository = materialsRepository;
@@ -18,7 +23,7 @@ namespace Services
 
         public async Task<double> CalculateEnvironmentalIndex(string materialName)
         {
-            MaterialImpact materialImpact = await GetMaterialImpact(materialName);
+            MaterialImpact materialImpact = await _materialsRepository.GetMaterialImpact(materialName);
 
             if (materialImpact == null)
             {
@@ -26,19 +31,14 @@ namespace Services
             }
 
             double result = (
-                materialImpact.Co2Score * 0.30 +
-                materialImpact.WaterScore * 0.20 +
-                materialImpact.ChemicalScore * 0.20 +
-                materialImpact.RecyclabilityScore * 0.15 +
-                materialImpact.AnimalWelfareScore * 0.15
+                materialImpact.Co2Score * Co2Weight +
+                materialImpact.WaterScore * WaterWeight +
+                materialImpact.ChemicalScore * ChemicalWeight +
+                materialImpact.RecyclabilityScore * RecyclabilityWeight +
+                materialImpact.AnimalWelfareScore * AnimalWelfareWeight
                 ) / 10.0;
 
             return Math.Round(result, 1);
-        }
-
-        private async Task<MaterialImpact> GetMaterialImpact(string name)
-        {
-            return await _materialsRepository.GetMaterialImpact(name);
         }
 
        

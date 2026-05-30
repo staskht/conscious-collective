@@ -24,6 +24,7 @@ builder.Services.AddScoped<IMaterialsService, MaterialsService>();
 builder.Services.AddScoped<IMaterialsRepository, MaterialsRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddSingleton<IUserRepository,  UserRepository>();
+builder.Services.AddScoped<IUserService,  UserService>();
 
 var app = builder.Build();
 

@@ -1,12 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ServiceContracts;
 
 namespace ConceousCollective.Web.Controllers
 {
-    public class UserController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class UserController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
         {
-            return View();
+            _userService = userService;
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Profile(Guid id)
+        {
+            var userProfileResponse = _userService.GetUserInformationById(id);
+
+            if (userProfileResponse == null) 
+            {
+                return NotFound("User not found");
+            }
+
+            return Ok(userProfileResponse);
         }
     }
 }

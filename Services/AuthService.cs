@@ -15,7 +15,7 @@ namespace Services
         {
             _userRepository = userRepository;
         }
-        public string Login(LoginRequest request)
+        public Guid? Login(LoginRequest request)
         {
             var user = _userRepository.GetUsers().FirstOrDefault(u =>
             u.Email == request.Email &&
@@ -23,21 +23,22 @@ namespace Services
 
             if (user == null)
             {
-                return "Invalid email or password.";
+                return null;
             }
 
-            return $"Welcome back, {user.Name}.";
+            return user.Id;
         }
 
-        public string Register(RegisterRequest request)
+        public bool Register(RegisterRequest request)
         {
             if (_userRepository.GetUsers().Any(u => u.Email == request.Email))
             {
-                return "User with this email already exists.";
+                return false;
             }
 
             var user = new User
             {
+                Id = new Guid(),
                 Email = request.Email,
                 Password = request.Password,
                 Name = request.Name
@@ -45,7 +46,7 @@ namespace Services
 
             _userRepository.AddUser(user);
 
-            return "User registered successfully.";
+            return true;
         }
     }
 }

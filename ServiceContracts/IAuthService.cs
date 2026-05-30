@@ -7,7 +7,7 @@ namespace ServiceContracts
 {
     public interface IAuthService
     {
-        string Register(RegisterRequest request);
-        string Login(LoginRequest request);
+        bool Register(RegisterRequest request);
+        Guid? Login(LoginRequest request);
     }
 }

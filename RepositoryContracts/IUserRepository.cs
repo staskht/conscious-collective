@@ -10,5 +10,7 @@ namespace RepositoryContracts
         IEnumerable<User> GetUsers();
 
         User AddUser(User user);
+
+        public User? GetUserById(Guid? id);
     }
 }

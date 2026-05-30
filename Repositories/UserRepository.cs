@@ -20,5 +20,10 @@ namespace Repositories
             _users.Add(user);
             return user;
         }
+
+        public User GetUserById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

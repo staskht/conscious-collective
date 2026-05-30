@@ -20,12 +20,12 @@ namespace ConceousCollective.Web.Controllers
         {
             var result = _authService.Register(request);
 
-            if (result.Contains("already exists"))
+            if (!result)
             {
-                return BadRequest(result);
+                return BadRequest("User already registered!");
             }
 
-            return Ok(result);
+            return Ok("Registered succesfully!");
         }
 
         [HttpPost("[action]")]
@@ -33,9 +33,9 @@ namespace ConceousCollective.Web.Controllers
         {
             var result = _authService.Login(request);
 
-            if (result.Contains("Invalid"))
+            if (result == null)
             {
-                return Unauthorized(result);
+                return Unauthorized("Invalid email or password");
             }
 
             return Ok(result);

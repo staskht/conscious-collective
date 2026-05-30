@@ -5,8 +5,8 @@ using System.Text;
 
 namespace ServiceContracts
 {
-    public interface IUserProfileService
+    public interface IUserService
     {
-        UserProfileResponse GetUserInformationById(Guid id);
+        UserProfileResponse? GetUserInformationById(Guid id);
     }
 }

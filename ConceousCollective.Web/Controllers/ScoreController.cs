@@ -6,7 +6,7 @@ namespace ConceousCollective.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ScoreController : Controller
+    public class ScoreController : ControllerBase
     {
         private readonly IWikiRateAnswerService _wikiRateAnswerService;
         private readonly IMaterialsService _materialsService;

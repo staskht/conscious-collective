@@ -21,9 +21,9 @@ namespace Repositories
             return user;
         }
 
-        public User GetUserById(Guid id)
+        public User? GetUserById(Guid? id)
         {
-            throw new NotImplementedException();
+            return _users.FirstOrDefault(user => user.Id == id);
         }
     }
 }

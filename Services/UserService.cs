@@ -15,9 +15,23 @@ namespace Services
         {
             _userRepository = userRepository;
         }
-        public UserProfileResponse GetUserInformationById(Guid id)
+        public UserProfileResponse? GetUserInformationById(Guid id)
         {
-            throw new NotImplementedException();
+            var user = _userRepository.GetUserById(id);
+
+            if (user == null) 
+            {
+                return null;
+            }
+
+            var userResponse = new UserProfileResponse
+            {
+                Email = user.Email,
+                Name = user.Name,
+            };
+
+            return userResponse;
+
         }
     }
 }

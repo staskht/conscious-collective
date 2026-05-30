@@ -1,4 +1,5 @@
 ﻿using Entities;
+using RepositoryContracts;
 using ServiceContracts;
 using ServiceContracts.DTOs;
 using System;
@@ -7,13 +8,16 @@ using System.Text;
 
 namespace Services
 {
-    public class InMemoryAuthService : IAuthService
+    public class AuthService : IAuthService
     {
-        private readonly List<User> _users = new();
-
+        private readonly IUserRepository _userRepository;
+        public AuthService(IUserRepository userRepository) 
+        {
+            _userRepository = userRepository;
+        }
         public string Login(LoginRequest request)
         {
-            var user = _users.FirstOrDefault(u =>
+            var user = _userRepository.GetUsers().FirstOrDefault(u =>
             u.Email == request.Email &&
             u.Password == request.Password);
 
@@ -27,7 +31,7 @@ namespace Services
 
         public string Register(RegisterRequest request)
         {
-            if (_users.Any(u => u.Email == request.Email))
+            if (_userRepository.GetUsers().Any(u => u.Email == request.Email))
             {
                 return "User with this email already exists.";
             }
@@ -39,7 +43,7 @@ namespace Services
                 Name = request.Name
             };
 
-            _users.Add(user);
+            _userRepository.AddUser(user);
 
             return "User registered successfully.";
         }

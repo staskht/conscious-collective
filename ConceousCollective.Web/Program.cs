@@ -22,7 +22,9 @@ builder.Services.AddHttpClient<IWikiRateAnswerService, WikiRateClient>(client =>
 
 builder.Services.AddScoped<IMaterialsService, MaterialsService>();
 builder.Services.AddScoped<IMaterialsRepository, MaterialsRepository>();
-builder.Services.AddSingleton<IAuthService, InMemoryAuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddSingleton<IUserRepository,  UserRepository>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

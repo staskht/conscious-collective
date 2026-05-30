@@ -7,6 +7,6 @@ namespace ServiceContracts
 {
     public interface IUserProfileService
     {
-        public UserProfileResponse GetUserInformationById(Guid id);
+        UserProfileResponse GetUserInformationById(Guid id);
     }
 }
